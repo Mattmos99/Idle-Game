@@ -3,20 +3,22 @@ using TMPro;
 
 public class Controller : MonoBehaviour
 {
-    public TMP_Text CoinText;
-    public double Coins;
-    public void Update()
+    [SerializeField] private TMP_Text CoinText;
+    public Data Data;
+
+    private void Start()
     {
-        CoinText.text = Coins+" Coins";
+        Data = new Data();
+
+    }
+    private void Update()
+    {
+        CoinText.text = Data.Coins + " Coins";
 
     }
 
     public void GenerateCoins()
     {
-
-        Coins += 1;
-
-
-
+        Data.Coins += 1;
     }
 }
