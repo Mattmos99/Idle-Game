@@ -4,17 +4,32 @@ using BreakInfinity;
 
 public class Controller : MonoBehaviour
 {
+    public static Controller instance;
+
+    public void Awake() => instance = this;
+
+    
+
     [SerializeField] private TMP_Text CoinText;
     [SerializeField] private TMP_Text CoinPowerText;
+
     public Data Data;
-    public UpgradesManager UpgradesManager;
-    public BigDouble ClickPower() => 1 + Data.ClickUpgradeLevel;
 
+    public BigDouble ClickPower()
+    {
+        BigDouble total = 1;
+        for(int i = 0; i < Data.ClickUpgradeLevel.Count; i++)
+        {
+            total += UpgradesManager.instance.ClickUpgradesBasePower[i] * Data.ClickUpgradeLevel[i];
+        }
 
+        return total;
+
+    }
     private void Start()
     {
         Data = new Data();
-        UpgradesManager.StartUpgradeManager();
+        UpgradesManager.instance.StartUpgradeManager();
     }
     private void Update()
     {
