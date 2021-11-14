@@ -8,12 +8,16 @@ public class Data
 {
     public BigDouble Coins;
     public List<int> ClickUpgradeLevel;
-    public List<int> ProductionUpgradeLevel; 
+    public List<BigDouble> ProductionUpgradeLevel;
+    public List<BigDouble> ProductionUpgradeGenerated;
+    public List<int> GeneratorUpgradeLevel;
     public Data()
     {
         Coins = 0;
 
         ClickUpgradeLevel = new int[4].ToList();
-        ProductionUpgradeLevel = new int[4].ToList();
+        ProductionUpgradeLevel = new BigDouble[4].ToList();
+        ProductionUpgradeGenerated = new BigDouble[4].ToList();
+        GeneratorUpgradeLevel = new int[4].ToList();
     }
 }

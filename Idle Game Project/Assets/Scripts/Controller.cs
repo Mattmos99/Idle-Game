@@ -21,7 +21,7 @@ public class Controller : MonoBehaviour
         BigDouble total = 1;
         for(int i = 0; i < Data.ClickUpgradeLevel.Count; i++)
         {
-            total += UpgradesManager.instance.ClickUpgradesBasePower[i] * Data.ClickUpgradeLevel[i];
+            total += UpgradesManager.instance.UpgradeHandlers[0].UpgradesBasePower[i] * Data.ClickUpgradeLevel[i];
         }
 
         return total;
@@ -34,11 +34,20 @@ public class Controller : MonoBehaviour
         BigDouble total = 0;
         for (int i = 0; i < Data.ProductionUpgradeLevel.Count; i++)
         {
-            total += UpgradesManager.instance.ProductionUpgradesBasePower[i] * Data.ProductionUpgradeLevel[i];
+            total += UpgradesManager.instance.UpgradeHandlers[1].UpgradesBasePower[i] * (Data.ProductionUpgradeLevel[i] + Data.ProductionUpgradeGenerated[i]);
         }
 
         return total;
     }
+
+
+    public BigDouble UpgradesPerSecond(int index)
+    {
+        return UpgradesManager.instance.UpgradeHandlers[2].UpgradesBasePower[index] * Data.GeneratorUpgradeLevel[index];
+
+
+    }
+
     private void Start()
     {
         Data = new Data();
@@ -51,6 +60,9 @@ public class Controller : MonoBehaviour
         CoinPowerText.text = "+" + ClickPower() + "Coins";
 
         Data.Coins += CoinsPerSecond() * Time.deltaTime;
+
+        for (var i = 0; i < Data.ProductionUpgradeLevel.Count; i++)
+            Data.ProductionUpgradeGenerated[i] += UpgradesPerSecond(i) * Time.deltaTime;
 
     }
 
