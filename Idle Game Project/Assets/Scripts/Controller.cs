@@ -47,12 +47,14 @@ public class Controller : MonoBehaviour
 
 
     }
-
+    private const string dataFileName = "PlayerData";
     private void Start()
     {
-        Data = new Data();
+        Data = SaveSystem.SaveExists(dataFileName) ? SaveSystem.LoadData<Data>(dataFileName) : new Data();
         UpgradesManager.instance.StartUpgradeManager();
     }
+
+    public float SaveTime;
     private void Update()
     {
         CoinText.text = Data.Coins.ToString("F2") + " Coins";
@@ -63,6 +65,13 @@ public class Controller : MonoBehaviour
 
         for (var i = 0; i < Data.ProductionUpgradeLevel.Count; i++)
             Data.ProductionUpgradeGenerated[i] += UpgradesPerSecond(i) * Time.deltaTime;
+
+        SaveTime += Time.deltaTime * (1 / Time.timeScale);
+        if (SaveTime >= 15)
+        {
+            SaveSystem.SaveData(Data, dataFileName);
+            SaveTime = 0;
+        }
 
     }
 
