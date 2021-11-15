@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using BreakInfinity;
 using System.Linq;
 
+
+[Serializable]
+
 public class Data 
 {
     public BigDouble Coins;
