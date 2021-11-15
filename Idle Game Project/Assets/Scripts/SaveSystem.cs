@@ -11,12 +11,21 @@ public class SaveSystem : MonoBehaviour
 {
     public TMP_InputField ImportField;
     public TMP_InputField ExportField;
+    public WebGLNativeInputField ImportFieldWebGL;
+    public WebGLNativeInputField ExportFieldWebGL;
 
     public Image CopyButton;
     public Image PasteButton;
+    public Image CopyButtonWebGL;
+    public Image PasteButtonWebGL;
 
     public TMP_Text CopyButtonText;
     public TMP_Text PasteButtonText;
+    public TMP_Text CopyButtonTextWebGL;
+    public TMP_Text PasteButtonTextWebGL;
+
+    public GameObject SaveSystemObject;
+    public GameObject SaveSystemObjectWebGL;
 
     private const string FileType = ".txt";
     private const string FilePath = "PlayerData";
@@ -24,6 +33,18 @@ public class SaveSystem : MonoBehaviour
     private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
 
     private static int SaveCount;
+
+    private void Start()
+    {
+#if UNITY_WEBGL
+SaveSystemObject.SetActive(false);
+SaveSystemObjectWebGL.SetActive(true);
+
+#else
+        SaveSystemObject.SetActive(true);
+        SaveSystemObjectWebGL.SetActive(false);
+#endif
+    }
 
     public static void SaveData<T>(T data, string fileName)
     {
@@ -90,7 +111,13 @@ public class SaveSystem : MonoBehaviour
 
         using (StreamWriter writer = new StreamWriter($"{SavePath}{FilePath}{FileType}"))
         {
+#if UNITY_WEBGL
+writer.WriteLine(ImportFieldWebGL.text);
+#else
             writer.WriteLine(ImportField.text);
+
+#endif
+            
             writer.Close();
         }
 
@@ -106,7 +133,11 @@ public class SaveSystem : MonoBehaviour
 
         using (StreamReader reader = new StreamReader($"{SavePath}{FilePath}{FileType}"))
         {
+#if UNITY_WEBGL
+ExportFieldWebGL.text = reader.ReadToEnd();
+#else
             ExportField.text = reader.ReadToEnd();
+#endif
             reader.Close();
         }
     }
@@ -114,17 +145,30 @@ public class SaveSystem : MonoBehaviour
     public void Copy()
     {
         if (ExportField.text == "") return;
+#if UNITY_WEBGL
+GUIUtility,systemCopyBuffer =ExportFieldWebGL.text;
+CopyButtonWebGL.color = Color.green;
+CopyButtonTextWebGL.text = "Copied!";
+#else
+
         GUIUtility.systemCopyBuffer = ExportField.text;
         CopyButton.color = Color.green;
         CopyButtonText.text = "Copied!";
+#endif
         StartCoroutine(CopyPasteButtonsNormal());
     }
 
     public void Paste()
     {
+#if UNITY_WEBGL
+GUIUtility.systemCopyBuffer = ImportFieldWebGL.text;
+PasteButtonWebGL.color = Color.green;
+PasteButtonTextWebGL.text = "Pasted!";
+#else
         ImportField.text = GUIUtility.systemCopyBuffer;
         PasteButton.color = Color.green;
         PasteButtonText.text = "Pasted!";
+#endif
         StartCoroutine(CopyPasteButtonsNormal());
     }
 
@@ -133,9 +177,11 @@ public class SaveSystem : MonoBehaviour
         if (type == "Export")
         {
             ExportField.text = "";
+            ExportFieldWebGL.text = "";
             return;
         }
         ImportField.text = "";
+        ImportFieldWebGL.text = "";
     }
 
     public IEnumerator CopyPasteButtonsNormal()
@@ -145,5 +191,10 @@ public class SaveSystem : MonoBehaviour
         CopyButtonText.text = "Copy to Clipboard";
         PasteButton.color = new Color(1f, 1f, 1f);
         PasteButtonText.text = "Paste Clipboard";
+
+        CopyButtonWebGL.color = new Color(1f, 1f, 1f);
+        CopyButtonTextWebGL.text = "Copy to Clipboard";
+        PasteButtonWebGL.color = new Color(1f, 1f, 1f);
+        PasteButtonTextWebGL.text = "Paste Clipboard";
     }
 }
