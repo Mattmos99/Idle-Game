@@ -41,7 +41,7 @@ SaveSystemObject.SetActive(false);
 SaveSystemObjectWebGL.SetActive(true);
 
 #else
-        SaveSystemObject.SetActive(true);
+        SaveSystemObject.SetActive(false);
         SaveSystemObjectWebGL.SetActive(false);
 #endif
     }

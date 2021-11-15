@@ -14,6 +14,8 @@ public class Data
     public List<BigDouble> ProductionUpgradeLevel;
     public List<BigDouble> ProductionUpgradeGenerated;
     public List<int> GeneratorUpgradeLevel;
+
+    public int notation;
     public Data()
     {
         Coins = 0;
@@ -22,5 +24,7 @@ public class Data
         ProductionUpgradeLevel = new BigDouble[4].ToList();
         ProductionUpgradeGenerated = new BigDouble[4].ToList();
         GeneratorUpgradeLevel = new int[4].ToList();
+
+        notation = 0;
     }
 }
