@@ -48,7 +48,7 @@ public class Controller : MonoBehaviour
 
     }
     private const string dataFileName = "PlayerData";
-    private void Start()
+    public void Start()
     {
         Data = SaveSystem.SaveExists(dataFileName) ? SaveSystem.LoadData<Data>(dataFileName) : new Data();
         UpgradesManager.instance.StartUpgradeManager();
@@ -69,10 +69,15 @@ public class Controller : MonoBehaviour
         SaveTime += Time.deltaTime * (1 / Time.timeScale);
         if (SaveTime >= 15)
         {
-            SaveSystem.SaveData(Data, dataFileName);
+            Save();
             SaveTime = 0;
         }
 
+    }
+
+    public void Save()
+    {
+        SaveSystem.SaveData(Data, dataFileName);
     }
 
     public void GenerateCoins()
