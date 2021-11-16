@@ -146,8 +146,8 @@ public class UpgradesManager : MonoBehaviour
         void UpdateUI(int ID)
         {
             BigDouble generated = upgradesGenerated == null ? 0 : upgradesGenerated[ID];
-            upgrades[ID].LevelText.text = (upgradeLevels[ID] + generated).ToString("F2");
-            upgrades[ID].CostText.text = $"Cost : { UpgradeCost(type, ID):F2} Coins";
+            upgrades[ID].LevelText.text = (upgradeLevels[ID] + generated).ToString("F0");
+            upgrades[ID].CostText.text = $"Cost : { UpgradeCost(type, ID).Notate()} Coins";
             upgrades[ID].NameText.text = upgradeNames[ID];
         }
 

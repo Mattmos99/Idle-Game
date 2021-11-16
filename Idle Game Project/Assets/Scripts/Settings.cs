@@ -15,7 +15,7 @@ public class Settings : MonoBehaviour
     public GameObject[] SettingPanels;
     public void StartSettings()
     {
-        NotationNames = new[] { "Standard", "Scientific" };
+        NotationNames = new[] { "Standard", "Scientific", "Engineering"};
         Notation = Controller.instance.Data.notation;
         SyncSetting();
     }
