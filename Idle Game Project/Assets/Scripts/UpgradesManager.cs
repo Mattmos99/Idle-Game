@@ -92,8 +92,26 @@ public class UpgradesManager : MonoBehaviour
                     UpgradeHandlers[index].Upgrades[i].gameObject.SetActive(currency >= unlock[i]);
         }
 
+        
 
-        if(UpgradeHandlers[1].UpgradeScroll.gameObject.activeSelf)
+   
+            if (UpgradeHandlers[0].UpgradeScroll.gameObject.activeSelf)
+        {
+            for (var i = 0; i < UpgradeHandlers[0].Upgrades.Count; i++)
+                UpgradeHandlers[0].Upgrades[i].Fill.fillAmount = Methods.Fill(Controller.instance.Data.Coins, UpgradeCost("click", i));
+        }
+        if (UpgradeHandlers[1].UpgradeScroll.gameObject.activeSelf)
+        {
+            for (var i = 0; i < UpgradeHandlers[1].Upgrades.Count; i++)
+                UpgradeHandlers[1].Upgrades[i].Fill.fillAmount = Methods.Fill(Controller.instance.Data.Coins, UpgradeCost("production", i));
+        }
+        if (UpgradeHandlers[2].UpgradeScroll.gameObject.activeSelf)
+        {
+            for (var i = 0; i < UpgradeHandlers[2].Upgrades.Count; i++)
+                UpgradeHandlers[2].Upgrades[i].Fill.fillAmount = Methods.Fill(Controller.instance.Data.Coins, UpgradeCost("generator", i));
+        }
+
+        if (UpgradeHandlers[1].UpgradeScroll.gameObject.activeSelf)
         {
             UpdateUpgradeUI("production");
         }
@@ -133,6 +151,8 @@ public class UpgradesManager : MonoBehaviour
             upgrades[ID].LevelText.text = upgradeLevels[ID].ToString("F0");
             upgrades[ID].CostText.text = $"Cost : { UpgradeCost(type, ID):F2} Coins";
             upgrades[ID].NameText.text = upgradeNames[ID];
+           // upgrades[ID].Fill.fillAmount = Methods.Fill(Controller.instance.Data.Coins, UpgradeCost(type, ID));
+           
         }
 
     }

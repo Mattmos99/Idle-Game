@@ -32,6 +32,7 @@ public class Settings : MonoBehaviour
                 break;
         }
         SyncSetting(settingName);
+        UpgradesManager.instance.UpdateUpgradeUI(settingName);
         
     }
     
