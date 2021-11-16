@@ -103,6 +103,8 @@ public static class Methods
                 return $"{number.mantissa.ToString($"F{mantissaDigits}")}e{number.exponent:N0}";
             case 2: //Eng
                 return $"{(number / BigDouble.Pow(10, 3 * BigDouble.Floor(number.exponent / 3))).ToString($"F{mantissaDigits}")}e{number.exponent - (number.exponent % 3) / 3:N0}";
+            case 3: //Log
+                return $"e{BigDouble.Log10(BigDouble.Abs(number)).ToString($"N{mantissaDigits}")}";
         }
         return "";
     }
