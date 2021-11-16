@@ -52,12 +52,13 @@ public class Controller : MonoBehaviour
     {
         Data = SaveSystem.SaveExists(dataFileName) ? SaveSystem.LoadData<Data>(dataFileName) : new Data();
         UpgradesManager.instance.StartUpgradeManager();
+        Settings.instance.StartSettings();
     }
 
     public float SaveTime;
     private void Update()
     {
-        CoinText.text = Data.Coins.ToString("F2") + " Coins";
+        CoinText.text = $"{Data.Coins.Notate()} Coins";
         CoinPerSecondText.text = $"{CoinsPerSecond():F2}/s";
         CoinPowerText.text = "+" + ClickPower() + "Coins";
 
