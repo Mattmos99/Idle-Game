@@ -127,4 +127,12 @@ public static class Methods
 
         }
     }
+
+    public static float Fill(BigDouble left, BigDouble right)
+    {
+        var fill = left / right;
+        if (fill > 1) return 1;
+        if (fill < 0.01) return 0;
+        return (float)fill;
+    }
 }
